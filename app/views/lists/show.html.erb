@@ -1,0 +1,25 @@
+<h1> Showing just one list </h1>
+
+<h2> <%= @list.name %> </h2>
+
+<h4> This will be all the movies in the list </h4>
+<ul>
+  <% @bookmarks.each do |bookmark| %>
+    <li> <%= bookmark.movie.title %> </li>
+    <p> Rating: <%= bookmark.movie.rating %></p>
+    <p> <%= bookmark.movie.overview %> </p>
+    <%# make this smaller (<%= image_tag(bookmark.movie.poster_url) %>
+    <p> <%= bookmark.comment %>
+    <%= link_to 'Remove from list', bookmark_path(bookmark), method: :delete, data: { confirm: 'Are you definitely sure?' }%>
+  <% end %>
+</ul>
+
+<h5> Add a new movie to this list </h5>
+
+<%= simple_form_for [@list, @bookmark] do |f| %>
+  <%= f.input :comment %>
+  <%= f.association :movie %>
+  <%= f.submit %>
+<% end %>
+
+<%= link_to 'Back to homepage', lists_path %>
